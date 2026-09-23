@@ -20,7 +20,7 @@ test('user can view backpack product details', async ({ page }) => {
     await page.getByText('Sauce Labs Backpack').click()
 
     await expect(page.getByText('Sauce Labs Backpack')).toBeVisible()
-    await expect(page.getByText('carry.allTheThings()...')).toBeVisible()
+    await expect(page.getByText('carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection.')).toBeVisible()
     await expect(page.getByText('$29.99')).toBeVisible()
     await expect(page).toHaveURL(/.*inventory-item.html\?id=4/)
 })
