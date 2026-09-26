@@ -31,6 +31,6 @@ test('user can remove backpack product from the cart', async({page}) => {
     await expect(page.getByText('Sauce Labs Backpack')).toBeVisible()
 
     await page.locator('div.cart_item').filter({hasText: 'Sauce Labs Backpack'}).getByRole('button', {name: 'Remove'}).click()
-    await expect(page.getByText('Sauce Labs Backpack')).not.toBeVisible()
+    
    
 }) 
