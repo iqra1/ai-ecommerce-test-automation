@@ -1,24 +1,24 @@
 import {test, expect} from '@playwright/test'
+import { LoginPage } from '../pages/LoginPage'
+import { ProductsPage } from '../pages/ProductsPage'
 
 test('products page should display products', async({page}) => {
 
-    await page.goto('/')
-    await page.getByPlaceholder('Username').fill('standard_user')
-    await page.getByPlaceholder('Password').fill('secret_sauce')
-    await page.getByRole('button', {name: 'Login'}).click()
-
+    const loginPage = new LoginPage(page)
+    await loginPage.goto()
+    await loginPage.login('standard_user', 'secret_sauce')
     await expect(page.getByText('Products')).toBeVisible()
 
 })
 
 test('user can view backpack product details', async ({ page }) => {
-    
-    await page.goto('/')
-    await page.getByPlaceholder('Username').fill('standard_user')
-    await page.getByPlaceholder('Password').fill('secret_sauce')
-    await page.getByRole('button', {name: 'Login'}).click()
-    await page.getByText('Sauce Labs Backpack').click()
 
+    const loginPage = new LoginPage(page)
+    const productsPage = new ProductsPage(page)
+
+    await loginPage.goto()
+    await loginPage.login('standard_user', 'secret_sauce')
+    await productsPage.openProduct('Sauce Labs Backpack')
     await expect(page.getByText('Sauce Labs Backpack')).toBeVisible()
     await expect(page.getByText('carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection.')).toBeVisible()
     await expect(page.getByText('$29.99')).toBeVisible()

@@ -3,8 +3,8 @@ import { LoginPage } from '../pages/LoginPage'
 
 test('Login with valid credentials', async({page}) => {
 
-    await page.goto('/')
     const loginPage = new LoginPage(page)
+    await loginPage.goto()
     await loginPage.login('standard_user', 'secret_sauce')
 
     //.* anything can appear before inventory.html URL must contain
@@ -14,8 +14,8 @@ test('Login with valid credentials', async({page}) => {
 
 test('Login with invalid password', async({page}) => {
 
-    await page.goto('/')
     const loginPage = new LoginPage(page)
+    await loginPage.goto()
     await loginPage.login('standard_user', 'wrong_password')
 
     await expect(page.getByRole('alert')).toHaveText(
@@ -26,8 +26,8 @@ test('Login with invalid password', async({page}) => {
 
 test('Login with invalid username', async({page}) => {
 
-    await page.goto('/')
     const loginPage = new LoginPage(page)
+    await loginPage.goto()
     await loginPage.login('invalid_user', 'secret_sauce')
 
     await expect(page.getByRole('alert')).toHaveText(
@@ -37,8 +37,8 @@ test('Login with invalid username', async({page}) => {
 
 test('Login with empty credentials', async({page}) => {
 
-    await page.goto('/')
     const loginPage = new LoginPage(page)
+    await loginPage.goto()
     await loginPage.login('', '')
 
     await expect(page.getByRole('alert')).toHaveText(
@@ -48,8 +48,8 @@ test('Login with empty credentials', async({page}) => {
 
 test('Login with empty username', async({page}) => {
     
-    await page.goto('/')
     const loginPage = new LoginPage(page)
+    await loginPage.goto()
     await loginPage.login('', 'secret_sauce')
 
     await expect(page.getByRole('alert')).toHaveText(
@@ -59,8 +59,8 @@ test('Login with empty username', async({page}) => {
 
 test('Login with empty password', async({page}) => {
     
-    await page.goto('/')
     const loginPage = new LoginPage(page)
+    await loginPage.goto()
     await loginPage.login('standard_user', '')
 
     await expect(page.getByRole('alert')).toHaveText(

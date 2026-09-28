@@ -1,17 +1,21 @@
 import {test, expect} from '@playwright/test'
 import { PDFParse } from 'pdf-parse'
 import fs from 'node:fs'
+import { LoginPage } from '../pages/LoginPage'
+import { ProductsPage } from '../pages/ProductsPage'
+import { CheckoutPage } from '../pages/CheckoutPage'
 
 
 test.beforeEach (async ({page})  => {
-    await page.goto('/')
-    await page.getByPlaceholder('Username').fill('standard_user')
-    await page.getByPlaceholder('Password').fill('secret_sauce')
-    await page.getByRole('button', {name: 'Login'}).click()
+    const loginPage = new LoginPage(page)
+    const productsPage = new ProductsPage(page)
+
+    await loginPage.goto()
+    await loginPage.login('standard_user', 'secret_sauce')
 
     await expect(page.getByText('Products')).toBeVisible()
 
-    await page.locator('div.inventory_item').filter({hasText: 'Sauce Labs Backpack'}).getByRole('button', {name: 'Add to cart'}).click()
+    await productsPage.addProductToCart('Sauce Labs Backpack')
     await page.locator('[data-test="shopping-cart-link"]').click()
 
     await expect(page).toHaveURL(/.*cart.html/)
@@ -29,10 +33,9 @@ test('user can reach checkout', async({page}) => {
 
 test('user can complete checkout information', async ({ page }) => {
 
-    await page.getByPlaceholder('First Name').fill('Iqra')
-    await page.getByPlaceholder('Last Name').fill('Luqman')
-    await page.getByPlaceholder('Zip/Postal Code').fill('12345')
-    await page.getByRole('button', {name: 'Continue'}).click()
+    const checkoutPage = new CheckoutPage(page)
+    await checkoutPage.fillCustomerInformation('Iqra', 'Luqman', '12345')
+    await checkoutPage.continue()
 
     await expect(page.getByText('Checkout: Overview')).toBeVisible()
     await expect(page).toHaveURL(/.*checkout-step-two.html/)
@@ -45,27 +48,27 @@ test('user can complete checkout information', async ({ page }) => {
 
 test('checkout requires first name', async ({ page }) => {
 
-    await page.getByPlaceholder('Last Name').fill('Luqman')
-    await page.getByPlaceholder('Zip/Postal Code').fill('12345')
-    await page.getByRole('button', {name: 'Continue'}).click()
+    const checkoutPage = new CheckoutPage(page)
+    await checkoutPage.fillCustomerInformation('', 'Luqman', '12345')
+    await checkoutPage.continue()
 
     await expect(page.getByRole('alert')).toHaveText('Error: First Name is required')
 })
 
 test('checkout requires last name', async ({ page }) => {
 
-    await page.getByPlaceholder('First Name').fill('Iqra')
-    await page.getByPlaceholder('Zip/Postal Code').fill('12345')
-    await page.getByRole('button', {name: 'Continue'}).click()
+    const checkoutPage = new CheckoutPage(page)
+    await checkoutPage.fillCustomerInformation('Iqra', '', '12345')
+    await checkoutPage.continue()
 
     await expect(page.getByRole('alert')).toHaveText('Error: Last Name is required')
 })
 
 test('checkout requires postal code', async ({ page }) => {
 
-    await page.getByPlaceholder('First Name').fill('Iqra')
-    await page.getByPlaceholder('Last Name').fill('Luqman')
-    await page.getByRole('button', {name: 'Continue'}).click()
+    const checkoutPage = new CheckoutPage(page)
+    await checkoutPage.fillCustomerInformation('Iqra', 'Luqman', '')
+    await checkoutPage.continue()
 
     await expect(page.getByRole('alert')).toHaveText('Error: Postal Code is required')
 })
@@ -73,15 +76,14 @@ test('checkout requires postal code', async ({ page }) => {
 
 test('user can complete the purchase', async ({ page }) => {
 
-    await page.getByPlaceholder('First Name').fill('Iqra')
-    await page.getByPlaceholder('Last Name').fill('Luqman')
-    await page.getByPlaceholder('Zip/Postal Code').fill('12345')
-    await page.getByRole('button', {name: 'Continue'}).click()
+    const checkoutPage = new CheckoutPage(page)
+    await checkoutPage.fillCustomerInformation('Iqra', 'Luqman', '12345')
+    await checkoutPage.continue()
 
     await expect(page.getByText('Checkout: Overview')).toBeVisible()
     await expect(page).toHaveURL(/.*checkout-step-two.html/)
 
-    await page.getByRole('button', {name: 'Finish'}).click()
+    await checkoutPage.finishOrder()
 
     await expect(page.getByText('Thank you for your order!')).toBeVisible()
     await expect(page).toHaveURL(/.*checkout-complete.html/)
@@ -90,13 +92,12 @@ test('user can complete the purchase', async ({ page }) => {
 
 test('user can download the order receipt', async ({ page }) => {
 
-    await page.getByPlaceholder('First Name').fill('Iqra')
-    await page.getByPlaceholder('Last Name').fill('Luqman')
-    await page.getByPlaceholder('Zip/Postal Code').fill('12345')
-    await page.getByRole('button', {name: 'Continue'}).click()
+    const checkoutPage = new CheckoutPage(page)
+    await checkoutPage.fillCustomerInformation('Iqra', 'Luqman', '12345')
+    await checkoutPage.continue()
 
     await expect(page.getByText('Checkout: Overview')).toBeVisible()
-    await page.getByRole('button', {name: 'Finish'}).click()
+    await checkoutPage.finishOrder()
     await expect(page.getByText('Thank you for your order!')).toBeVisible()
 
 

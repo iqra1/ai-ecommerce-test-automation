@@ -1,14 +1,18 @@
 import { test, expect } from '@playwright/test'
+import { LoginPage } from '../pages/LoginPage'
+import { ProductsPage } from '../pages/ProductsPage'
+import { CartPage } from '../pages/CartPage'
 
 test('user can add backpack product to cart', async({page}) => {
-    await page.goto('/')
-    await page.getByPlaceholder('Username').fill('standard_user')
-    await page.getByPlaceholder('Password').fill('secret_sauce')
-    await page.getByRole('button', {name: 'Login'}).click()
+    const loginPage = new LoginPage(page)
+    const productsPage = new ProductsPage(page)
+
+    await loginPage.goto()
+    await loginPage.login('standard_user', 'secret_sauce')
 
     await expect(page.getByText('Products')).toBeVisible()
 
-    await page.locator('div.inventory_item').filter({hasText: 'Sauce Labs Backpack'}).getByRole('button', {name: 'Add to cart'}).click()
+    await productsPage.addProductToCart('Sauce Labs Backpack')
     await page.locator('[data-test="shopping-cart-link"]').click()
 
     await expect(page).toHaveURL(/.*cart.html/)
@@ -17,20 +21,22 @@ test('user can add backpack product to cart', async({page}) => {
 })
 
 test('user can remove backpack product from the cart', async({page}) => {
-    await page.goto('/')
-    await page.getByPlaceholder('Username').fill('standard_user')
-    await page.getByPlaceholder('Password').fill('secret_sauce')
-    await page.getByRole('button', {name: 'Login'}).click()
+    const loginPage = new LoginPage(page)
+    const productsPage = new ProductsPage(page)
+    const cartPage = new CartPage(page)
 
+    await loginPage.goto()
+    await loginPage.login('standard_user', 'secret_sauce')
     await expect(page.getByText('Products')).toBeVisible()
 
-    await page.locator('div.inventory_item').filter({hasText: 'Sauce Labs Backpack'}).getByRole('button', {name: 'Add to cart'}).click()
+    await productsPage.addProductToCart('Sauce Labs Backpack')
     await page.locator('[data-test="shopping-cart-link"]').click()
 
     await expect(page).toHaveURL(/.*cart.html/)
     await expect(page.getByText('Sauce Labs Backpack')).toBeVisible()
 
-    await page.locator('div.cart_item').filter({hasText: 'Sauce Labs Backpack'}).getByRole('button', {name: 'Remove'}).click()
+    await cartPage.removeProduct('Sauce Labs Backpack')
+    await expect(page.getByText('Sauce Labs Backpack')).not.toBeVisible()
     
    
 }) 
