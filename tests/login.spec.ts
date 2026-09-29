@@ -1,9 +1,8 @@
-import {test, expect} from '@playwright/test'
-import { LoginPage } from '../pages/LoginPage'
+import {expect} from '@playwright/test'
+import { test } from '../fixtures/fixtures'
 
-test('Login with valid credentials', async({page}) => {
+test('Login with valid credentials', async({page, loginPage}) => {
 
-    const loginPage = new LoginPage(page)
     await loginPage.goto()
     await loginPage.login('standard_user', 'secret_sauce')
 
@@ -12,9 +11,8 @@ test('Login with valid credentials', async({page}) => {
     await expect(page.getByText('Products')).toBeVisible()
 })
 
-test('Login with invalid password', async({page}) => {
+test('Login with invalid password', async({page, loginPage}) => {
 
-    const loginPage = new LoginPage(page)
     await loginPage.goto()
     await loginPage.login('standard_user', 'wrong_password')
 
@@ -24,9 +22,8 @@ test('Login with invalid password', async({page}) => {
 
 })
 
-test('Login with invalid username', async({page}) => {
+test('Login with invalid username', async({page, loginPage}) => {
 
-    const loginPage = new LoginPage(page)
     await loginPage.goto()
     await loginPage.login('invalid_user', 'secret_sauce')
 
@@ -35,9 +32,8 @@ test('Login with invalid username', async({page}) => {
 )
 })
 
-test('Login with empty credentials', async({page}) => {
+test('Login with empty credentials', async({page, loginPage}) => {
 
-    const loginPage = new LoginPage(page)
     await loginPage.goto()
     await loginPage.login('', '')
 
@@ -46,9 +42,8 @@ test('Login with empty credentials', async({page}) => {
 )
 })
 
-test('Login with empty username', async({page}) => {
+test('Login with empty username', async({page, loginPage}) => {
     
-    const loginPage = new LoginPage(page)
     await loginPage.goto()
     await loginPage.login('', 'secret_sauce')
 
@@ -57,9 +52,9 @@ test('Login with empty username', async({page}) => {
 )
 })
 
-test('Login with empty password', async({page}) => {
+test('Login with empty password', async({page, loginPage}) => {
     
-    const loginPage = new LoginPage(page)
+    await loginPage.goto()
     await loginPage.goto()
     await loginPage.login('standard_user', '')
 

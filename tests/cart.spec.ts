@@ -1,11 +1,8 @@
-import { test, expect } from '@playwright/test'
-import { LoginPage } from '../pages/LoginPage'
-import { ProductsPage } from '../pages/ProductsPage'
-import { CartPage } from '../pages/CartPage'
+import { expect } from '@playwright/test'
+import { test } from '../fixtures/fixtures'
 
-test('user can add backpack product to cart', async({page}) => {
-    const loginPage = new LoginPage(page)
-    const productsPage = new ProductsPage(page)
+
+test('user can add backpack product to cart', async({page, loginPage, productsPage}) => {
 
     await loginPage.goto()
     await loginPage.login('standard_user', 'secret_sauce')
@@ -20,17 +17,14 @@ test('user can add backpack product to cart', async({page}) => {
    
 })
 
-test('user can remove backpack product from the cart', async({page}) => {
-    const loginPage = new LoginPage(page)
-    const productsPage = new ProductsPage(page)
-    const cartPage = new CartPage(page)
-
+test('user can remove backpack product from the cart', async({page, loginPage, productsPage, cartPage}) => {
+    
     await loginPage.goto()
     await loginPage.login('standard_user', 'secret_sauce')
     await expect(page.getByText('Products')).toBeVisible()
 
     await productsPage.addProductToCart('Sauce Labs Backpack')
-    await page.locator('[data-test="shopping-cart-link"]').click()
+    await cartPage.openCart()
 
     await expect(page).toHaveURL(/.*cart.html/)
     await expect(page.getByText('Sauce Labs Backpack')).toBeVisible()

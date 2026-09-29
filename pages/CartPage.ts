@@ -11,4 +11,12 @@ export class CartPage {
             .getByRole('button', { name: 'Remove' })
             .click()
     }
+
+    async openCart() {
+        await this.page.locator('[data-test="shopping-cart-link"]').click()
+    }
+
+    async checkout(){
+        await this.page.getByRole('button', {name: 'Checkout'}).click()
+    }
 }

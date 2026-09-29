@@ -21,4 +21,13 @@ export class CheckoutPage {
     async finishOrder() {
         await this.page.getByRole('button', { name: 'Finish' }).click()
     }
+
+    async downloadReceipt() {
+        const downloadPromise = this.page.waitForEvent('download') // Start waiting for the download
+        await this.page.getByRole('button', { name: 'Generate PDF order' }).click()
+        const download = await downloadPromise
+        await download.saveAs('downloads/order-receipt.pdf')
+        return download
+
+    }
 }
