@@ -24,6 +24,16 @@
       "name": "API Test Product 2",
       "price": 80.99,
       "id": 5
+    },
+    {
+      "name": "API Test Product 2",
+      "price": 80.99,
+      "id": 6
+    },
+    {
+      "name": "API Test Product 2",
+      "price": 80.99,
+      "id": 7
     }
   ]
 }
