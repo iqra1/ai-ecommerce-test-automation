@@ -36,18 +36,35 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
+      testIgnore: ['**/*.api.spec.ts','**/mock-api.spec.ts'],
       use: { ...devices['Desktop Chrome'] },
     },
 
     {
       name: 'firefox',
+      testIgnore: ['**/*.api.spec.ts','**/mock-api.spec.ts'],
       use: { ...devices['Desktop Firefox'] },
     },
 
     {
       name: 'webkit',
+      testIgnore: ['**/*.api.spec.ts','**/mock-api.spec.ts'],
       use: { ...devices['Desktop Safari'] },
     },
+    {
+      name: 'api',
+      testMatch: '**/*.api.spec.ts',
+      use: {
+        baseURL: 'https://jsonplaceholder.typicode.com',
+      }
+    },
+    {
+      name: 'mock-api',
+      testMatch: '**/mock-api.spec.ts',
+      use: {
+          baseURL: 'http://localhost:3001',
+      },
+  },
 
     /* Test against mobile viewports. */
     // {

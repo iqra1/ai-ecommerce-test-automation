@@ -1,0 +1,29 @@
+{
+  "products": [
+    {
+      "name": "API Test Product",
+      "price": 99.99,
+      "id": 1
+    },
+    {
+      "name": "API Test Product",
+      "price": 99.99,
+      "id": 2
+    },
+    {
+      "name": "API Test Product",
+      "price": 99.99,
+      "id": 3
+    },
+    {
+      "name": "API Test Product 2",
+      "price": 80.99,
+      "id": 4
+    },
+    {
+      "name": "API Test Product 2",
+      "price": 80.99,
+      "id": 5
+    }
+  ]
+}

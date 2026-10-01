@@ -2,7 +2,7 @@
   "name": "playwright-practice-project",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {"mock-api": "json-server mock-api/db.json --port 3001"},
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -10,6 +10,7 @@
   "devDependencies": {
     "@playwright/test": "^1.62.1",
     "@types/node": "^26.6.3",
+    "json-server": "^0.17.4",
     "pdf-parse": "^2.4.5"
   }
 }
