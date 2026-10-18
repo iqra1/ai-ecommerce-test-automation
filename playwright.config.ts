@@ -59,7 +59,7 @@ export default defineConfig({
     },
     {
       name: 'mock-api',
-      testMatch: '**/mock-api.spec.ts',
+      testMatch: '**/{mock-api,isolation}.spec.ts',
       use: {
           baseURL: 'http://localhost:3001',
       },
