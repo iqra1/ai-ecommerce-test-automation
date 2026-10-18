@@ -311,7 +311,3 @@ push. MCP is a design-time aid; Playwright tests are the regression safety net.
 - **Iqra Luqman**
 - GitHub: `https://github.com/iqra1`
 - LinkedIn: `https://www.linkedin.com/in/iqra-luqman-072b1784/?isSelfProfile=true`
-
-## License
-
-No license is declared in `package.json`. Add one before distributing or reusing this project.
