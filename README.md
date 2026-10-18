@@ -1,7 +1,7 @@
-# AI E-Commerce Test Automation — SauceDemo
+# E-Commerce Test Automation with AI — SauceDemo
 
 An end-to-end test automation framework built with **Playwright** and **TypeScript**. It validates
-the full purchase flow of [SauceDemo](https://www.saucedemo.com) — an e-commerce demo application —
+the full purchase flow of [SauceDemo](https://www.saucedemo.com), an e-commerce demo application
 covering login, product browsing, cart, checkout, and receipt download, plus **REST API testing**
 against both an external API and a **local mock API**. The project also demonstrates **CI/CD** with
 GitHub Actions and **AI-assisted browser exploration** through the Playwright MCP server.
@@ -13,20 +13,20 @@ automation: reusable page objects, shared fixtures, isolated tests, and clear fa
 
 - **Playwright UI automation** with TypeScript for the SauceDemo storefront.
 - **Core user journeys**: login validation, product listing, cart operations, and checkout.
-- **PDF receipt download and verification** — the generated receipt is parsed and asserted
+- **PDF receipt download and verification**: the generated receipt is parsed and asserted
   field-by-field (`pdf-parse`).
-- **REST API testing** using Playwright's built-in `request` fixture with HTTP method coverage
+- **REST API testing**: using Playwright's built-in `request` fixture with HTTP method coverage
   (GET, POST, PUT, DELETE) and response assertions.
-- **Local mock API** powered by `json-server` for deterministic, offline API testing.
-- **Data isolation pattern** — a create → verify → cleanup test that attempts to remove its data in
+- **Local mock API**: powered by `json-server` for deterministic, offline API testing.
+- **Data isolation pattern**: a create → verify → cleanup test that attempts to remove its data in
   a `finally` block.
-- **Page Object Model (POM)** and reusable **custom fixtures** (`checkoutReady`) that compose
+- **Page Object Model (POM)**: and reusable **custom fixtures** (`checkoutReady`) that compose
   multi-step preconditions.
-- **Cross-browser execution** on Chromium, Firefox, and WebKit.
-- **Parallel execution, retries, tracing, screenshots, and video** captured on failure.
-- **GitHub Actions CI/CD** that installs browsers, starts the mock API, runs the suite, and uploads
+- **Cross-browser execution**: on Chromium, Firefox, and WebKit.
+- **Parallel execution, retries, tracing, screenshots, and video**: captured on failure.
+- **GitHub Actions CI/CD**: that installs browsers, starts the mock API, runs the suite, and uploads
   reports and results as artifacts.
-- **OpenCode + Playwright MCP integration** for AI-assisted browser exploration.
+- **OpenCode + Playwright MCP integration**: for AI-assisted browser exploration.
 
 ## Tech Stack
 
