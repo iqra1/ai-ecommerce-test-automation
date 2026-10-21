@@ -7,3 +7,10 @@ node_modules/
 /playwright/.cache/
 /playwright/.auth/
 /downloads/
+
+
+# Playwright MCP generated artifacts
+.playwright-mcp/
+
+# OpenCode installed dependencies
+.opencode/node_modules/
